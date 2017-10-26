@@ -5,17 +5,20 @@ class App extends React.Component {
 
     this.state = {
       video: exampleVideoData[0],
-      videos: exampleVideoData
+      videos: exampleVideoData,
+      description: exampleVideoData[0].snippet.description,
+      autoplay: false
     };
 
     this.onSearch('');  
   }
 
-  componentDidMount() {
+  onAutoPlayClick() {
+    this.setState({autoplay: !this.state.autoplay});
   }
 
   onTitleClick(video) {
-    this.setState({video: video});
+    this.setState({video: video, description: video.snippet.description});
   }
 
   onSearch(term) {
@@ -23,16 +26,23 @@ class App extends React.Component {
     searchYouTube({
       key: window.YOUTUBE_API_KEY,
       query: term, 
-      max: '5', 
+      max: '5',
     }, 
       function(data) {
         console.log(data);
         app.setState({
           videos: data,
-          video: data[0]
+          video: data[0],
+          description: data[0].snippet.description
         });
       } 
     );
+  }
+
+  onDetails() {
+    searchVideo(this.state.video.id.videoId, (data) => {
+      this.setState({description: data[0].snippet.description});
+    });
   }
 
   render() {
@@ -45,10 +55,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.state.video} />
+            <VideoPlayer video={this.state.video} description={this.state.description} autoplay={(this.state.autoplay) ? 1 : 0} detailsListener={this.onDetails.bind(this)} />
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videos} clickListener={this.onTitleClick.bind(this)} />
+            <VideoList videos={this.state.videos} autoPlayListener={this.onAutoPlayClick.bind(this)} clickListener={this.onTitleClick.bind(this)} />
           </div>
         </div>
       </div>

@@ -9,19 +9,30 @@ var searchYouTube = (options, callback) => {
       maxResults: options.max,
       type: 'video',
       videoEmbeddable: 'true',
-      part: 'snippet'
+      part: 'snippet',
     },
     success: function(data) {
       callback(data.items);
     }
   });
-  // fetch('https://www.googleapis.com/youtube/v3/search', { data: options}).then(
-  //   function(response) {
-  //     if (response.ok) {
-  //       console.log(response.blob());
-  //       return response.blob();
-  //     }
-  //   });
+};
+
+var searchVideo = (id, callback) => {
+  $.ajax({
+    url: 'https://www.googleapis.com/youtube/v3/videos',
+    type: 'GET',
+    data: {
+      id: id,
+      key: window.YOUTUBE_API_KEY,
+      type: 'video',
+      videoEmbeddable: 'true',
+      part: 'snippet'
+    },
+    success: function(data) {
+      //console.log(data);
+      callback(data.items);
+    }
+  });
 };
 
 window.searchYouTube = searchYouTube;

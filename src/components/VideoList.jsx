@@ -1,5 +1,6 @@
 var VideoList = (props) => (
   <div className="video-list">
+    <input id="autoplayButton" onChange={props.autoPlayListener} type="checkbox"/> AutoPlay
     {props.videos.map(video =>
       <VideoListEntry clickListener={props.clickListener} video={video} />  
     )}
