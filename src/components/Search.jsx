@@ -11,6 +11,7 @@ class Search extends React.Component {
     this.setState({
       text: event.target.value
     });
+    _.debounce(() => this.props.searchClick(this.state.text), 500)();
   }
 
   render() {

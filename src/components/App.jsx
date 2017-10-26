@@ -8,7 +8,10 @@ class App extends React.Component {
       videos: exampleVideoData
     };
 
-    this.onSearch('');
+    this.onSearch('');  
+  }
+
+  componentDidMount() {
   }
 
   onTitleClick(video) {
@@ -19,17 +22,14 @@ class App extends React.Component {
     var app = this;
     searchYouTube({
       key: window.YOUTUBE_API_KEY,
-      q: term, 
-      maxResults: '5', 
-      type: 'video',
-      videoEmbeddable: 'true',
-      part: 'snippet'
+      query: term, 
+      max: '5', 
     }, 
       function(data) {
         console.log(data);
         app.setState({
-          videos: data.items,
-          video: data.items[0]
+          videos: data,
+          video: data[0]
         });
       } 
     );
