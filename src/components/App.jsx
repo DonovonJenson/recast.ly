@@ -29,7 +29,6 @@ class App extends React.Component {
       max: '5',
     }, 
       function(data) {
-        console.log(data);
         app.setState({
           videos: data,
           video: data[0],
@@ -54,7 +53,7 @@ class App extends React.Component {
           </div>
         </nav>
         <div className="row">
-          <div className="col-md-7">
+          <div className="col-md-7">  
             <VideoPlayer video={this.state.video} description={this.state.description} autoplay={(this.state.autoplay) ? 1 : 0} detailsListener={this.onDetails.bind(this)} />
           </div>
           <div className="col-md-5">
